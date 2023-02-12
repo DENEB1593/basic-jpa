@@ -18,6 +18,27 @@ public class Application {
   CommandLineRunner commandLineRunner(StudentRepository studentRepository) {
     return args -> {
       studentRepository.save(new Student("deneb", "lee", "deneb@gmail.com", 30));
+
+      studentRepository.findStudentByEmailEqualsAndAgeIsGreaterThan(
+        "deneb@gmail.com", 20)
+        .ifPresentOrElse(
+          System.out::println,
+          System.out::println
+        );
+
+      // @Query
+      studentRepository.findByFirstName("deneb")
+        .ifPresentOrElse(
+          System.out::println,
+          System.out::println
+        );
+
+      //@Query(native)
+      studentRepository.findByFirstNameWithNativeQuery("deneb")
+        .ifPresentOrElse(
+          System.out::println,
+          System.out::println
+        );
     };
   }
 

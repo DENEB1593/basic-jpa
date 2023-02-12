@@ -23,6 +23,7 @@ public class Student {
     strategy = GenerationType.SEQUENCE,
     generator = "student_sequence"
   )
+  @Column(updatable = false)
   private Long id;
 
   @Column(nullable = false)
@@ -48,10 +49,6 @@ public class Student {
 
   public Long getId() {
     return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getFirstName() {
