@@ -18,7 +18,9 @@ flush privileges;
 - @Query를 사용하여 JPQL 규칙을 이용한 기능을 구현한다. native옵션을 통해 사용하는 DBMS 문법과 호환되는 query를 작성할 수 있다.
 - @Param을 사용하여 JPQL의 매개변수명을 지정할 수 있다.
 - [Spring Documentation JPQL](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods)
+- UPDATE, DELETE와 같이 수정 작업의 경우 @Modifying을 이용하는 경우 @Transactional 어노테이션을 추가해줘야한다.
 
 #### [이력]
 * 23.02.10 - 최초 커밋
 * 23.02.12 - @Query 추가
+* 23.02.19 - @Modifying

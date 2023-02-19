@@ -39,6 +39,14 @@ public class Application {
           System.out::println,
           System.out::println
         );
+
+
+      //@Query(modify)
+      System.out.println("Delete Transaction Result : " +
+        studentRepository.deleteByStudentId(1L)); //성공 시 1
+
+      System.out.println("Delete Transaction Result : " +
+        studentRepository.deleteByStudentId(1L)); //실패 시 0
     };
   }
 
