@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <mysql-driver.verion>8.0.31</mysql-driver.verion>
         <commons-lang.version>3.12.0</commons-lang.version>
+        <java-faker.version>1.0.2</java-faker.version>
     </properties>
     <dependencies>
         <dependency>
@@ -40,6 +41,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${java-faker.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
