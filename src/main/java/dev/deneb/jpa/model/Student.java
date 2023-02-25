@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(
   name = "students",
@@ -37,6 +40,21 @@ public class Student {
 
   @Column(nullable = false)
   private Integer age;
+
+  @OneToOne(
+    mappedBy = "student",
+    orphanRemoval = true)
+  // student_id_card 내 student 멤벼변수를 매핑한다.
+  // orphan removal 옵션 사용 시 연관된 엔티티를 같이 삭제한다.
+  private StudentIdCard studentIdCard;
+  // mapping 후 student <-> student_id_card는 bi direction 관계를 가지게 되었다.
+
+  @OneToMany(
+    mappedBy = "student",
+    orphanRemoval = true,
+    cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+  )
+  private final List<Book> books = new ArrayList<>();
 
   public Student() { }
 
@@ -83,6 +101,20 @@ public class Student {
     this.age = age;
   }
 
+  public void addBook(Book book) {
+    if (!this.books.contains(book)) {
+     this.books.add(book);
+     book.setStudent(this);
+    }
+  }
+
+  public void removeBook(Book book) {
+    if (this.books.contains(book)) {
+      this.books.remove(book);
+      book.setStudent(null); //student의 연관관계를 끊음.
+    }
+  }
+
   @Override
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -91,6 +123,7 @@ public class Student {
       .append("lastName", lastName)
       .append("email", email)
       .append("age", age)
+      .append("student_id_card", studentIdCard)
       .toString();
   }
 }
