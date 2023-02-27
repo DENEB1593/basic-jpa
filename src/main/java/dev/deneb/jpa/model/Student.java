@@ -43,7 +43,9 @@ public class Student {
 
   @OneToOne(
     mappedBy = "student",
-    orphanRemoval = true)
+    orphanRemoval = true,
+    cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+  )
   // student_id_card 내 student 멤벼변수를 매핑한다.
   // orphan removal 옵션 사용 시 연관된 엔티티를 같이 삭제한다.
   private StudentIdCard studentIdCard;
@@ -113,6 +115,10 @@ public class Student {
       this.books.remove(book);
       book.setStudent(null); //student의 연관관계를 끊음.
     }
+  }
+
+  public List<Book> getBooks() {
+    return books;
   }
 
   @Override

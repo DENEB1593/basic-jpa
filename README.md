@@ -26,3 +26,5 @@ flush privileges;
 * 23.02.10 - 최초 커밋
 * 23.02.12 - @Query 추가
 * 23.02.19 - @Modifying, Faker, Sort
+* 23.02.25 - @OneToOne 관계
+* 23.02.26 - @OneToMany, @ManyToOne

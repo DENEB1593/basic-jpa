@@ -1,6 +1,7 @@
 package dev.deneb.jpa.configure;
 
 import com.github.javafaker.Faker;
+import dev.deneb.jpa.model.Book;
 import dev.deneb.jpa.model.Student;
 import dev.deneb.jpa.model.StudentIdCard;
 import dev.deneb.jpa.repository.StudentIdCardRepository;
@@ -14,6 +15,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Configuration
 public class FakerDataConfigure {
@@ -36,18 +40,30 @@ public class FakerDataConfigure {
         int age = faker.number().numberBetween(15, 25);
 
         Student student = new Student(firstName, lastName, email, age);
+
+        student.addBook(new Book("Clean Code", LocalDateTime.now().minusDays(5), student));
+        student.addBook(new Book("Effective Java", LocalDateTime.now().minusDays(2), student));
+        student.addBook(new Book("Practice spring boot", LocalDateTime.now().minusDays(1), student));
+
         StudentIdCard studentIdCard = new StudentIdCard("123456789", student);
 
         // student_id_card 저장 시 student도 저장되는 것을 확인할 수 있다.
         studentIdCardRepository.save(studentIdCard);
 
-        studentRepository.findById(1L)
-          .ifPresent(System.out::println);
+        studentRepository.findById(2L)
+          .ifPresent(s -> {
+            System.out.println("student fetch lazy ...");
+            List<Book> books = s.getBooks();
+            books.forEach(book -> {
+              System.out.println(s.getFirstName() + " borrowed " + book.getBookName());
+            });
 
-        studentIdCardRepository.findById(1L)
-          .ifPresent(System.out::println);
-
-        studentRepository.deleteById(2L);
+          });
+//
+//        studentIdCardRepository.findById(1L)
+//          .ifPresent(System.out::println);
+//
+//        studentRepository.deleteById(2L);
       }
     };
   }

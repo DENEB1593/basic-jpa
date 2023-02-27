@@ -2,7 +2,7 @@ package dev.deneb.jpa.model;
 
 import jakarta.persistence.*;
 
-@Entity
+@Entity(name = "StudentIdCard")
 @Table(
   name = "student_id_card",
   uniqueConstraints = {
@@ -34,7 +34,7 @@ public class StudentIdCard {
   @JoinColumn(
     name = "student_id",
     referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "student_card_fk")
+    foreignKey = @ForeignKey(name = "student_id_card_fk")
   )
   private Student student;
 

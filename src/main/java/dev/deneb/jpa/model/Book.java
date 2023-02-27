@@ -2,10 +2,9 @@ package dev.deneb.jpa.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "Book")
 @Table(name = "books")
 public class Book {
 
