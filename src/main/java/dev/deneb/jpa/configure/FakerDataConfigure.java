@@ -1,9 +1,7 @@
 package dev.deneb.jpa.configure;
 
 import com.github.javafaker.Faker;
-import dev.deneb.jpa.model.Book;
-import dev.deneb.jpa.model.Student;
-import dev.deneb.jpa.model.StudentIdCard;
+import dev.deneb.jpa.model.*;
 import dev.deneb.jpa.repository.StudentIdCardRepository;
 import dev.deneb.jpa.repository.StudentRepository;
 import org.slf4j.Logger;
@@ -48,6 +46,20 @@ public class FakerDataConfigure {
 
         // student_id_card 저장 시 student도 저장되는 것을 확인할 수 있다.
         student.setStudentIdCard(studentIdCard);
+
+        student.addEnrolment(new Enrolment(
+          new EnrolmentId(1L, 1L),
+          student,
+          new Course("Computer Science", "IT"), LocalDateTime.now().minusDays(10)
+          )
+        );
+
+        student.addEnrolment(new Enrolment(
+            new EnrolmentId(1L, 2L),
+            student, new Course("Economy", "EP"), LocalDateTime.now().minusDays(18)
+
+          )
+        );
 
         studentRepository.save(student);
 
