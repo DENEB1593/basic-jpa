@@ -21,6 +21,8 @@ flush privileges;
 - UPDATE, DELETE와 같이 수정 작업의 경우 @Modifying을 이용하는 경우 @Transactional 어노테이션을 추가해줘야한다.
 - Faker 라이브러리를 활용하여 더미 데이터 생성을 더 유용하게 할 수 있다.
 - 다건조회의 경우 Sort 구현체를 통해 정렬을 할 수 있다. (Sort 참고) 
+- 다대다(ManyToMany)를 구현하는 경우 중간에 연결테이블을 구현하여 연결되는 앤티티의 PK를 둘 수 있다.
+- [Spring Documentation Transaction](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#transactions)
 
 #### [이력]
 * 23.02.10 - 최초 커밋
@@ -28,3 +30,4 @@ flush privileges;
 * 23.02.19 - @Modifying, Faker, Sort
 * 23.02.25 - @OneToOne 관계
 * 23.02.26 - @OneToMany, @ManyToOne
+* 23.03.01 - @ManyToMany, @Embedded(다대다 연결테이블 구현)
