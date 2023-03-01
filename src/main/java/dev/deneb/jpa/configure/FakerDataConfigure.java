@@ -26,8 +26,7 @@ public class FakerDataConfigure {
 
   @Profile("!prod")
   @Bean
-  public CommandLineRunner set(StudentRepository studentRepository,
-                               StudentIdCardRepository studentIdCardRepository) {
+  public CommandLineRunner set(StudentRepository studentRepository) {
     return args -> {
       Faker faker = new Faker();
       for (int i = 0; i < 1; i++) {
@@ -48,7 +47,9 @@ public class FakerDataConfigure {
         StudentIdCard studentIdCard = new StudentIdCard("123456789", student);
 
         // student_id_card 저장 시 student도 저장되는 것을 확인할 수 있다.
-        studentIdCardRepository.save(studentIdCard);
+        student.setStudentIdCard(studentIdCard);
+
+        studentRepository.save(student);
 
         studentRepository.findById(2L)
           .ifPresent(s -> {
@@ -59,11 +60,6 @@ public class FakerDataConfigure {
             });
 
           });
-//
-//        studentIdCardRepository.findById(1L)
-//          .ifPresent(System.out::println);
-//
-//        studentRepository.deleteById(2L);
       }
     };
   }

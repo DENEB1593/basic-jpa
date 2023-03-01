@@ -54,9 +54,27 @@ public class Student {
   @OneToMany(
     mappedBy = "student",
     orphanRemoval = true,
-    cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+    fetch = FetchType.LAZY
   )
-  private final List<Book> books = new ArrayList<>();
+  private List<Book> books = new ArrayList<>();
+
+  @ManyToMany(
+    cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+    fetch = FetchType.LAZY
+  )
+  @JoinTable(
+    name = "enrolment",
+    joinColumns = @JoinColumn(
+      name = "student_id",
+      foreignKey = @ForeignKey(name = "enrolment_student_fk")
+    ),
+    inverseJoinColumns = @JoinColumn(
+      name = "course_id",
+      foreignKey = @ForeignKey(name = "enrolment_course_fk")
+    )
+  )
+  private List<Course> courses = new ArrayList<>();
 
   public Student() { }
 
@@ -117,8 +135,26 @@ public class Student {
     }
   }
 
+  public void setStudentIdCard(StudentIdCard studentIdCard) {
+    this.studentIdCard = studentIdCard;
+  }
+
   public List<Book> getBooks() {
     return books;
+  }
+
+  public List<Course> getCourses() {
+    return courses;
+  }
+
+  public void enrolToCourse(Course course) {
+    courses.add(course);
+    course.getStudents().add(this);
+  }
+
+  public void unEnrolCourse(Course course) {
+    courses.remove(course);
+    course.getStudents().remove(this);
   }
 
   @Override
@@ -132,4 +168,5 @@ public class Student {
       .append("student_id_card", studentIdCard)
       .toString();
   }
+
 }
